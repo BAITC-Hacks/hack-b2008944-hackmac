@@ -16,6 +16,13 @@ from ekt_client import (
 )
 from pydantic import BaseModel, Field
 
+from cart_store import (
+    add_cart_item,
+    get_cart,
+    get_cart_quantity,
+    remove_cart_item,
+)
+
 
 
 app = FastAPI(
@@ -26,6 +33,11 @@ class AddToCartRequest(BaseModel):
     session_id: str = Field(min_length=1, max_length=100)
     product_id: int
     quantity: int = Field(gt=0)
+    confirmed: bool = False
+
+class RemoveFromCartRequest(BaseModel):
+    session_id: str = Field(min_length=1, max_length=100)
+    product_id: int
     confirmed: bool = False
 
 
@@ -157,4 +169,29 @@ def cart_add(request: AddToCartRequest):
         "message": "Product added to cart",
         "cart": updated_cart,
         "cart_url": f"/cart?session_id={request.session_id}",
+    }
+
+@app.delete("/cart/item")
+def cart_remove(request: RemoveFromCartRequest):
+    if not request.confirmed:
+        raise HTTPException(
+            status_code=400,
+            detail="Explicit confirmation is required",
+        )
+
+    removed = remove_cart_item(
+        session_id=request.session_id,
+        product_id=request.product_id,
+    )
+
+    if not removed:
+        raise HTTPException(
+            status_code=404,
+            detail="Product is not in the cart",
+        )
+
+    return {
+        "status": "success",
+        "message": "Product removed from cart",
+        "cart": get_cart(request.session_id),
     }

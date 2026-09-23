@@ -54,3 +54,15 @@ def add_cart_item(
         }
 
     return get_cart(session_id)
+
+def remove_cart_item(
+    session_id: str,
+    product_id: int,
+) -> bool:
+    cart = carts.get(session_id)
+
+    if not cart or product_id not in cart:
+        return False
+
+    del cart[product_id]
+    return True
