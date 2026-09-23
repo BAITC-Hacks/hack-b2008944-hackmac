@@ -3,6 +3,11 @@ from fastapi import FastAPI, HTTPException, Query
 
 from pydantic import BaseModel, Field
 
+from fastapi.middleware.cors import CORSMiddleware
+
+from analog_service import find_analogs
+
+
 from cart_store import (
     add_cart_item,
     get_cart,
@@ -16,6 +21,8 @@ from ekt_client import (
 )
 from pydantic import BaseModel, Field
 
+
+
 from cart_store import (
     add_cart_item,
     get_cart,
@@ -23,6 +30,23 @@ from cart_store import (
     remove_cart_item,
 )
 
+app = FastAPI(
+    title="EKT AI Assistant API",
+    version="0.1.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 app = FastAPI(
@@ -195,3 +219,28 @@ def cart_remove(request: RemoveFromCartRequest):
         "message": "Product removed from cart",
         "cart": get_cart(request.session_id),
     }
+
+@app.get("/products/{product_id}/analogs")
+def product_analogs(
+    product_id: int,
+    max_pages: int = Query(default=10, ge=1, le=100),
+    limit: int = Query(default=3, ge=1, le=10),
+):
+    try:
+        return find_analogs(
+            product_id=product_id,
+            max_pages=max_pages,
+            limit=limit,
+        )
+
+    except httpx.HTTPStatusError as error:
+        raise HTTPException(
+            status_code=502,
+            detail=f"EKT API returned status {error.response.status_code}",
+        )
+
+    except httpx.RequestError:
+        raise HTTPException(
+            status_code=503,
+            detail="EKT API is unavailable",
+        )
