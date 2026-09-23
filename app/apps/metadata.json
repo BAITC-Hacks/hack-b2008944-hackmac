@@ -1,0 +1,6 @@
+{
+  "name": "ECT.kz — ИИ Консультант",
+  "description": "Умный ИИ-консультант интернет-магазина электротехники ect.kz: быстрый подбор кабеля, автоматики, щитков, светотехники и расчет нагрузок",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

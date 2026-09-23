@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Hexagon electrical badge -->
+    <path
+        android:pathData="M54,26 L78,40 L78,68 L54,82 L30,68 L30,40 Z"
+        android:fillColor="#152B47"
+        android:strokeWidth="2.5"
+        android:strokeColor="#FFB300" />
+    
+    <!-- Circuit connection nodes -->
+    <path
+        android:pathData="M30,40 L22,35 M78,40 L86,35 M30,68 L22,73 M78,68 L86,73"
+        android:strokeWidth="2"
+        android:strokeColor="#FFB300" />
+    <path
+        android:pathData="M22,35 A2,2 0 1,1 22,34.9 M86,35 A2,2 0 1,1 86,34.9 M22,73 A2,2 0 1,1 22,72.9 M86,73 A2,2 0 1,1 86,72.9"
+        android:strokeWidth="2.5"
+        android:strokeColor="#FFD54F" />
+
+    <!-- Bold electrical dynamic lightning bolt -->
+    <path
+        android:pathData="M57,32 L44,52 L53,52 L47,76 L66,50 L56,50 Z"
+        android:fillColor="#FFC107"
+        android:strokeWidth="1.5"
+        android:strokeColor="#FFE082" />
+
+    <!-- Center energy highlight -->
+    <path
+        android:pathData="M55,36 L47,50 L54,50 L50,68 L62,48 L55,48 Z"
+        android:fillColor="#FFF8E1" />
+</vector>
