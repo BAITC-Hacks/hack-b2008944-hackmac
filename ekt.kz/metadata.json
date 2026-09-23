@@ -1,8 +1,0 @@
-{
-  "name": "ekt.kz",
-  "description": "Современный интернет-магазин электротехники EKT с умным ИИ-инженерным консультантом, подбором по характеристикам и наличием на складах Казахстана",
-  "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
-}
